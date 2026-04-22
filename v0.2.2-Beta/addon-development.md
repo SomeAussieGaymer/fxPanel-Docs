@@ -169,8 +169,8 @@ The `addon.json` file is required in every addon's root directory. It is validat
         "path": "/notes",
         "title": "Player Notes",
         "icon": "StickyNote",          // Lucide icon name
-        "sidebar": true,               // Show in sidebar + top nav (default: false = top nav only)
-        "sidebarGroup": "Players",
+        "sidebar": true,               // Optional legacy flag; 0.2.2+ shows addon pages in sidebar by default
+        "sidebarGroup": "Players",    // Legacy compatibility field (treated as sidebar-enabled)
         "permission": "players.read",
         "component": "PlayerNotesPage" // Named export from panel entry
       }
@@ -220,14 +220,14 @@ The `addon.json` file is required in every addon's root directory. It is validat
 
 ### Page Visibility
 
-The `sidebar` property controls where your addon page appears in the panel navigation:
+Addon page visibility is version-aware:
 
-| `sidebar` value | Sidebar (left nav) | Top nav bar | Mobile menu |
-|-----------------|--------------------|--------------------|-------------|
-| `true` | Yes | Yes | Yes |
-| `false` (default) | No | Yes | Yes |
+| Panel version | `sidebar: true` | `sidebar: false` |
+|---------------|------------------|------------------|
+| `>= 0.2.2-Beta` | Sidebar + mobile menu | Sidebar + mobile menu |
+| `< 0.2.2-Beta` | Sidebar + top nav + mobile menu | Top nav + mobile menu |
 
-All addon pages always appear in the top navigation bar (either as a direct link if there's only one, or under an "Addons" dropdown if there are multiple). Setting `sidebar: true` additionally pins the page to the left sidebar for quick access.
+In modern builds (`0.2.2-Beta` and newer), addon pages are surfaced in the dedicated **Addons** area of the sidebar by default. The `sidebar` and `sidebarGroup` fields remain for backward compatibility with older panel builds.
 
 ### Widget Slots
 
