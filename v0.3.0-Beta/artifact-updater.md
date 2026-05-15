@@ -82,3 +82,21 @@ On Linux, `txEnv.fxsPath` points at `alpine/opt/cfx-server/`, so the artifact ro
 3. Use a built-in tier when possible; use a custom URL only from `runtime.fivem.net`.
 4. Watch the updater status until the process restarts or reports an error.
 5. If restart cannot be detected automatically, restart FXServer manually and check for `fxserver_update_failure.txt` beside the artifact root.
+
+---
+
+## Common errors
+
+| Message / pattern | Where | What to do |
+| ----------------- | ----- | ---------- |
+| `Only admins with all permissions can manage artifacts.` | API toast | Grant `all_permissions` — see [Constraints](#constraints) |
+| `A valid HTTPS download URL is required.` | Download API | Use `https://` URLs only |
+| `Download URL hostname is not allowed. Permitted: runtime.fivem.net` | Download API | Official [Download Sources](#download-sources) only |
+| `No downloaded update ready to apply. Please download first.` | Apply API | Wait until status is `extracted` — see [Update Flow](#update-flow) |
+| `Invalid artifact structure…` / missing `FXServer.exe` | Console / status | Wrong OS artifact; see [Platform Behavior](#platform-behavior) |
+| `Failed to stop game server: …` | Apply | Stop FXServer manually, then retry |
+| `fxserver_update_failure.txt` | Artifact root | Read file; fix; delete marker before retry |
+| `Please enter a valid https URL` (panel) | Custom URL field | Match [Download Sources](#download-sources) host |
+| `Failed to load artifact data` | `/system/artifacts` page | Check server logs and `all_permissions` |
+
+Complete reference: [Error messages → Artifact download and apply](/docs/v0.3.0-Beta/troubleshooting#error-messages) and [Artifact updater UI](/docs/v0.3.0-Beta/troubleshooting#artifact-updater-ui).

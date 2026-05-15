@@ -51,6 +51,25 @@ fxPanel supports signing in with Discord. If an admin account has a matching Dis
 
 > **Note:** The Discord bot does not need to be enabled for OAuth login to work. The OAuth Client ID/Secret are separate from the standalone bot token and bridge configuration.
 
+## OAuth errors and API responses
+
+Literal strings from `GET /auth/discord/redirect` and `POST /auth/discord/callback`. See also [Error messages → Discord OAuth](/docs/v0.3.0-Beta/troubleshooting#error-messages).
+
+| Message / `errorCode` | Endpoint | Typical cause | What to do |
+| --------------------- | -------- | ------------- | ---------- |
+| `Discord OAuth is not configured.` | Redirect or callback | Missing OAuth client id/secret in Settings → Discord Bot | Fill **OAuth Client ID** and **OAuth Client Secret**; save |
+| `no_admins_setup` | Redirect | No admin accounts exist yet | Complete first-time master setup |
+| `Invalid request body` + Zod detail | Callback | Malformed `code` / `state` | Retry login from panel |
+| `invalid_session` | Callback | Session cookie lost before callback | Same browser tab; do not clear cookies mid-flow |
+| `invalid_state` | Callback | `state` query does not match session | Retry; avoid parallel login attempts |
+| `Discord token exchange failed` + `Status <n>` | Callback | Redirect URI mismatch, revoked secret, or expired code | Match Developer Portal redirect to `{origin}/login/discord/callback` exactly |
+| `Invalid access_token in response` | Callback | Unexpected Discord token JSON | Verify OAuth app; check verbose logs |
+| `Discord token exchange error` + message | Callback | Network failure talking to Discord | Retry; check firewall |
+| `Failed to fetch Discord user info` + status | Callback | User endpoint failed after token exchange | Retry; check Discord API status |
+| `Failed to get Discord user info` | Callback | Parse/network error on user fetch | Same as above |
+| `not_admin` (with `identifier`, `name`, `profile`) | Callback | Discord account not linked to an admin | Set **Discord ID** on the admin in [Admin Manager](/docs/v0.3.0-Beta/admin-manager) |
+| `Failed to login` | Callback | Vault or session error after match | Check server logs; verify `txData` permissions |
+
 ---
 
 ## Persistent Embeds
@@ -309,4 +328,4 @@ When an addon command or interaction handler throws, or when it repeatedly hits 
 - The **Diagnostics -> Discord Bot** page shows addon load failures and exposes **Reload addons** and **Resync runtime** actions for the standalone bot.
 - Keep the built-in `bridge/`, `_fxpanel/commands`, and `_fxpanel/events` files intact so fxPanel can keep the panel features working.
 
-For the full addon command example, event example, mock-bridge workflow, and manifest snippets, see [Addon Development](addon-development.md).
+For the full addon command example, event example, mock-bridge workflow, and manifest snippets, see [Addon Development](/docs/v0.3.0-Beta/addon-development).

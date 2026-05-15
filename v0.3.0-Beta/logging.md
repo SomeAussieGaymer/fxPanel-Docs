@@ -1,6 +1,6 @@
 # Logging
 
-Admin logs, FXServer console logs, custom server log events, and optional Discord log routing.
+Admin logs, FXServer console logs, in-game server logs, and optional Discord log routing.
 
 ---
 
@@ -27,7 +27,7 @@ The live FXServer console output is available in the **Console** page. Admins wi
 
 ### Server Logs
 
-Custom server log events sent by your resources via the logging API. These appear in the **Server Log** page and can be filtered by source and type.
+In-game activity captured by the `monitor` resource logger. These appear in the **Server Log** page and can be filtered by event type and player context.
 
 ### Discord Log Routes
 
@@ -68,35 +68,20 @@ Logging behavior can be configured in fxPanel Settings:
 
 - **Log retention** — How long admin action logs are kept before being pruned
 - **Console buffer size** — How many lines of FXServer console output to keep in memory
-- **Server log storage** — Where custom server log entries are stored and for how long
+- **Server log storage** — Rotating file stream options, retention days, and event types to exclude from server logging
 - **Discord log routing** — The warnings channel, one shared log guild override, which log streams post to Discord, their channel IDs, and advanced in-game command filters
 
 ---
 
 ## Custom Server Logs
 
-Resources can send custom log entries to fxPanel's Server Log system using the `txAdmin:events:serverLog` event pattern. This lets you capture in-game activity in a centralized, searchable log.
+The Server Log page is fed by the `monitor` resource logger. It records built-in events such as player joins/leaves, chat messages, explosions, menu actions, death notices, and selected fxPanel system activity.
 
-### How to Enable
+There is no current `txAdmin:events:serverLog` public API in the source. For compatibility with older integrations, the resource still accepts these server-side events from the server console/source `0`:
 
-1. Emit a server event with your log data from any server-side resource
-2. The entry appears in the Server Log page in the web panel
-3. Entries can be filtered by the source resource name
+- `txaLogger:CommandExecuted`
+- `txaLogger:DebugMessage`
 
-### Example
+Those compatibility events are marked deprecated in the source and log a warning the first time they are used.
 
-```lua
--- Send a custom server log entry
-TriggerEvent('txAdmin:events:serverLog', {
-    source = 'my-resource',
-    type = 'info',
-    message = 'Player purchased a vehicle: Adder',
-    data = {
-        player = GetPlayerName(source),
-        vehicle = 'adder',
-        price = 1500000
-    }
-})
-```
-
-Log entries include a timestamp, source resource name, log level (info/warn/error), message text, and optional structured data.
+Server log entries include a timestamp, event type, source player or `tx`, and event-specific data. Filtering is based on the event type and player context exposed by the Server Log UI.

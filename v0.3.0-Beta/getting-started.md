@@ -32,7 +32,7 @@ fxPanel replaces the default txAdmin monitor that ships with FXServer. Installat
 
 > ⛔ **Important:** Make sure you fully delete the existing `monitor` folder before adding fxPanel. Running both at the same time will cause conflicts.
 
-> **Note:** The default port is `40120`. You can change it via the `TXHOST_TXA_PORT` environment variable. See [Configuration](configuration.md) for details.
+> **Note:** The default port is `40120`. You can change it via the `TXHOST_TXA_PORT` environment variable. See [Configuration](/docs/v0.3.0-Beta/configuration) for details.
 
 ### Linux
 
@@ -79,11 +79,11 @@ After installation, follow these steps to get your server running:
 
 4. **Start the Server** — Click the Start button on the dashboard. fxPanel will manage the FXServer process with automatic crash/hang recovery.
 
-5. **Access In-Game** — Join your server and type `/tx` to open the admin menu. See [In-Game Menu](in-game-menu.md) for details.
+5. **Access In-Game** — Join your server and type `/tx` to open the admin menu. See [In-Game Menu](/docs/v0.3.0-Beta/in-game-menu) for details.
 
 ### What's Next?
 
-- [Configure environment variables](configuration.md) for hosting providers
-- [Set up admin permissions](permissions.md) and add moderators
-- [Manage admin accounts](admin-manager.md) for staff onboarding and permission presets
-- [Connect your Discord bot](discord.md) for status embeds, log routing, and notifications
+- [Configure environment variables](/docs/v0.3.0-Beta/configuration) for hosting providers
+- [Set up admin permissions](/docs/v0.3.0-Beta/permissions) and add moderators
+- [Manage admin accounts](/docs/v0.3.0-Beta/admin-manager) for staff onboarding and permission presets
+- [Connect your Discord bot](/docs/v0.3.0-Beta/discord) for status embeds, log routing, and notifications

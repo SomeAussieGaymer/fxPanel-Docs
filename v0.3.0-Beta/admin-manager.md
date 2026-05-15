@@ -78,3 +78,24 @@ New admins receive a generated temporary password. The password is shown once an
 5. Use **Bulk Apply** only when you want to replace permissions for selected eligible admins.
 
 For example, to create a support-only staff account, grant read-oriented permissions such as `console.view` and `players.reports`, then add action permissions like `players.warn` or `players.kick` only if that role should moderate players directly.
+
+---
+
+## Common errors
+
+Panel toasts from `POST /adminManager/:action` when validation or safety rules fail.
+
+| Message / pattern | Typical cause | What to do |
+| ----------------- | ------------- | ---------- |
+| `You don't have permission to execute this action.` | Missing `manage.admins` | See [Permissions](/docs/v0.3.0-Beta/permissions) |
+| `Invalid Request` / `Invalid Request - missing parameters` | Bad request body | Include `name`, `permissions`, and id fields |
+| `Invalid username, it must follow the rule:` | Username regex | [Account Constraints](#account-constraints) |
+| `Invalid CitizenFX ID…` / `Failed to verify CitizenFX ID` | Cfx.re id lookup failed | Use `fivem:<id>` or valid forum username |
+| `Invalid Discord ID` | Not a snowflake | Numeric Discord user id only |
+| `You cannot give permissions you do not have:` | Escalation blocked | Grant subset you already hold |
+| `(ERR0) You cannot edit yourself.` | Self-edit | Use Account page or another admin |
+| `You can't delete yourself.` / `You cannot delete an admin master.` | Safety rule | [Safety Rules](#safety-rules) |
+| `Admin not found.` | Wrong name | Refresh list |
+| `You cannot reset your own password here.` | Self reset | Use change-password flow |
+
+Full list: [Error messages → Admin Manager](/docs/v0.3.0-Beta/troubleshooting#error-messages).

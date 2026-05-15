@@ -8,7 +8,7 @@ Granular permission system with individual permissions and custom presets.
 
 fxPanel uses a non-combined permission system — each permission is granted individually rather than being grouped into a single role string. This gives server owners fine-grained control over what each admin can do.
 
-Admins can be managed through the Admin Manager in the web panel. Each admin account can be linked to Discord or Cfx.re identifiers for in-game authentication, and optionally protected with Two-Factor Authentication (TOTP). Permissions are saved in the `txData/admins.json` file. See [Admin Manager](admin-manager.md) for account workflows, safety rules, and API behavior.
+Admins can be managed through the Admin Manager in the web panel. Each admin account can be linked to Discord or Cfx.re identifiers for in-game authentication, and optionally protected with Two-Factor Authentication (TOTP). Permissions are saved in the `txData/admins.json` file. See [Admin Manager](/docs/v0.3.0-Beta/admin-manager) for account workflows, safety rules, and API behavior.
 
 ---
 
@@ -118,7 +118,7 @@ Because the synced permissions are written onto the admin record, staff can see 
 
 ## Addon Permissions
 
-Addons can define custom permission strings that appear alongside built-in permissions in the admin role editor. See [Addon Development -> Custom Admin Permissions](addon-development.md#custom-admin-permissions) for details.
+Addons can define custom permission strings that appear alongside built-in permissions in the admin role editor. See [Addon Development → Custom Admin Permissions](/docs/v0.3.0-Beta/addon-development#custom-admin-permissions) for details.
 
 ---
 

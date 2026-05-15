@@ -65,3 +65,23 @@ Pre-fill setup fields so server owners don't have to enter them manually. These 
 > **Security Note:** Default credentials (especially database passwords and CFX keys) should only be set in secure hosting environments. They are visible to anyone with access to environment variables on the machine.
 
 `TXHOST_DEFAULT_ACCOUNT` must be `username:fivemId` or `username:fivemId:bcrypt`. The username must pass the same FiveM username validation used for admin accounts, and the optional password must be a bcrypt hash.
+
+---
+
+## Environment validation errors
+
+On startup, fxPanel parses every set `TXHOST_*` variable through `getHostVars()`. Invalid values call `fatalError` and stop the process before the panel listens. Full tables (including host `FXPHOST_*` and UI strings) are in [Error messages](/docs/v0.3.0-Beta/troubleshooting#error-messages).
+
+| Message / pattern | Variable (typical) | What to do |
+| ----------------- | ------------------ | ---------- |
+| `Invalid value for a TXHOST environment variable.` + quote hint | Any `TXHOST_*` | Remove surrounding `"` or `'` in your host panel / systemd / Docker env |
+| Zod detail after the block above | The failing key shown in logs | Fix format per tables in [Environment Variables](#environment-variables) and [Networking](#networking) |
+| `Token must be alphanumeric…` / length | `TXHOST_API_TOKEN` | Use 16–48 chars from `[A-Za-z0-9_-]` or set `disabled` |
+| `DATA_PATH must be an absolute path` | `TXHOST_DATA_PATH` | Full filesystem path to `txData` |
+| `TXA_PORT cannot be 30120` | `TXHOST_TXA_PORT` | Choose another panel port (default `40120`) |
+| `FXS_PORT cannot be between 40120 and 40150` | `TXHOST_FXS_PORT` | Avoid the reserved panel port range |
+| `Invalid IPv4 address` | `TXHOST_INTERFACE` | Dotted-quad IPv4 only |
+| Provider name validation messages | `TXHOST_PROVIDER_NAME` | See [Provider Customization](#provider-customization) |
+| `The account needs to be in the username:fivemId…` | `TXHOST_DEFAULT_ACCOUNT` | `name:fivemId` or `name:fivemId:bcrypt` |
+| `The key needs to be in the cfxk_… format` | `TXHOST_DEFAULT_CFXKEY` | Valid Cfx license key string |
+| `Public addon server requires TLS credentials…` | `TXHOST_ADDON_PUBLIC_TLS_*` | Set TLS key/cert (or `_FILE` paths) when addons use a dedicated public HTTPS port |
